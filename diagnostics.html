@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFSS GeoSafe Live Backend Diagnostics</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:900px;margin:40px auto;padding:0 18px;color:#102a43;background:#f7fafc}h1{font-size:28px} .card{background:#fff;border:1px solid #d9e2ec;border-radius:12px;padding:18px;margin:14px 0}.ok{color:#087f5b;font-weight:700}.bad{color:#c92a2a;font-weight:700}.wait{color:#8a5a00;font-weight:700}pre{white-space:pre-wrap;word-break:break-word;background:#f1f5f9;padding:12px;border-radius:8px;font-size:13px}button{background:#1268a8;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer}</style>
+</head>
+<body>
+<h1>NFSS GeoSafe — Live Backend Diagnostic</h1>
+<p>This page tests only the public live-report connection. It does not use or expose the private command key.</p>
+<div class="card"><strong>Browser</strong><pre id="browser"></pre></div>
+<div class="card"><strong>1. GitHub configuration</strong><div id="config" class="wait">Running…</div><pre id="configDetail"></pre></div>
+<div class="card"><strong>2. Apps Script JSONP reports</strong><div id="jsonp" class="wait">Running…</div><pre id="jsonpDetail"></pre></div>
+<div class="card"><strong>3. Direct CORS fetch (secondary test)</strong><div id="cors" class="wait">Running…</div><pre id="corsDetail"></pre></div>
+<button onclick="runAll()">Run again</button>
+<script>
+const DEFAULT_BACKEND='https://script.google.com/macros/s/AKfycbwshF31zDcOcWTUdaMZm7DN0oSbIvHFa4y2Z05qF7NHRUra6WQtQz1w0WqvYZsmc3vg/exec';
+let backend=DEFAULT_BACKEND;
+function status(id,ok,msg,detail=''){const el=document.getElementById(id);el.className=ok?'ok':'bad';el.textContent=msg;document.getElementById(id+'Detail').textContent=detail;}
+async function testConfig(){try{const r=await fetch('config/backend.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();backend=j.web_app_url||DEFAULT_BACKEND;status('config',true,'PASS — configuration loaded','enabled='+j.enabled+'\nendpoint='+backend+'\npoll_seconds='+j.poll_seconds);return j;}catch(e){status('config',false,'FAIL — '+e.message,String(e.stack||e));return null;}}
+function testJsonp(){return new Promise(resolve=>{const cb='nfssDiagCb'+Date.now()+Math.floor(Math.random()*1e6);const s=document.createElement('script');let done=false;const finish=(ok,msg,detail)=>{if(done)return;done=true;clearTimeout(t);try{delete window[cb]}catch(_){window[cb]=undefined}if(s.parentNode)s.remove();status('jsonp',ok,msg,detail);resolve(ok);};window[cb]=data=>{const ids=Array.isArray(data&&data.reports)?data.reports.map(x=>x.report_id):[];finish(data&&data.success===true,'PASS — JSONP executed in this page','count='+(data&&data.count)+'\nreports='+ids.join(', '));};s.onerror=()=>finish(false,'FAIL — browser blocked or could not execute the JSONP script','script.onerror fired\nURL='+s.src);const t=setTimeout(()=>finish(false,'FAIL — JSONP timed out','No callback after 20 seconds\nURL='+s.src),20000);s.src=backend+'?action=reports&callback='+encodeURIComponent(cb)+'&_ts='+Date.now();document.head.appendChild(s);});}
+async function testCors(){try{const r=await fetch(backend+'?action=reports&_ts='+Date.now(),{cache:'no-store'});const text=await r.text();status('cors',true,'PASS — direct fetch allowed','HTTP '+r.status+'\n'+text.slice(0,1000));}catch(e){status('cors',false,'FAIL — direct cross-origin fetch blocked','This is acceptable if JSONP passes.\n'+String(e));}}
+async function runAll(){document.getElementById('browser').textContent='URL='+location.href+'\nOnline='+navigator.onLine+'\nUser agent='+navigator.userAgent;['config','jsonp','cors'].forEach(id=>{document.getElementById(id).className='wait';document.getElementById(id).textContent='Running…';document.getElementById(id+'Detail').textContent='';});await testConfig();await testJsonp();await testCors();}
+runAll();
+</script>
+</body>
+</html>
