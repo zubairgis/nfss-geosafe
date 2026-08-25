@@ -1,0 +1,14 @@
+{
+  "title": "NFSS GeoSafe",
+  "subtitle": "Community-Based Forest & Rural Security Reporting, Situational Awareness and Evidence Dashboard",
+  "demonstration_area": "Sagbama LGA, Bayelsa State, Nigeria",
+  "demonstration_mode": true,
+  "default_map_center": {
+    "latitude": 5.1,
+    "longitude": 6.25,
+    "zoom": 10
+  },
+  "primary_sections": ["Overview", "Operational Map", "Community Intelligence", "Reports", "Verification & Response", "Forest Surveillance", "Evidence & Analytics", "Methodology"],
+  "public_warning": "Demonstration system. Synthetic incident records are not real security events.",
+  "operational_principle": "Community observation -> evidence -> verification -> spatial context -> assignment -> action -> resolution."
+}

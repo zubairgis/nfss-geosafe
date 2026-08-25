@@ -1,0 +1,45 @@
+{
+  "categories": [
+    {
+      "id": "forest_activity",
+      "label": "Suspicious forest or bush activity"
+    },
+    {
+      "id": "forest_encroachment",
+      "label": "Forest encroachment"
+    },
+    {
+      "id": "illegal_logging",
+      "label": "Illegal logging / tree removal"
+    },
+    {
+      "id": "community_threat",
+      "label": "Farmer or community safety threat"
+    },
+    {
+      "id": "suspicious_movement",
+      "label": "Suspicious movement"
+    },
+    {
+      "id": "waterway_movement",
+      "label": "Suspicious river / waterway movement"
+    },
+    {
+      "id": "fire_burning",
+      "label": "Bush fire / burning"
+    },
+    {
+      "id": "route_access",
+      "label": "Blocked or inaccessible route"
+    },
+    {
+      "id": "environmental_damage",
+      "label": "Environmental damage"
+    },
+    {
+      "id": "other",
+      "label": "Other forest or rural security observation"
+    }
+  ],
+  "note": "Initial demonstration categories. NFSS should validate and revise categories before operational use."
+}

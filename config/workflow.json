@@ -1,0 +1,32 @@
+{
+  "workflow_name": "NFSS GeoSafe Evidence Workflow",
+  "statuses": ["Submitted", "Under Review", "Verified", "Assigned", "Resolved", "Closed"],
+  "transitions": [
+    {
+      "from": "Submitted",
+      "to": "Under Review"
+    },
+    {
+      "from": "Under Review",
+      "to": "Verified"
+    },
+    {
+      "from": "Verified",
+      "to": "Assigned"
+    },
+    {
+      "from": "Assigned",
+      "to": "Resolved"
+    },
+    {
+      "from": "Resolved",
+      "to": "Closed"
+    }
+  ],
+  "rules": {
+    "submitted_is_verified": false,
+    "verification_required_before_assignment": true,
+    "evidence_history_retained": true,
+    "public_reporter_identity_exposed": false
+  }
+}

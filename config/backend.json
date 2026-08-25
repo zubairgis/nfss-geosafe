@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "mode": "central_live_demo",
+  "web_app_url": "https://script.google.com/macros/s/AKfycbwshF31zDcOcWTUdaMZm7DN0oSbIvHFa4y2Z05qF7NHRUra6WQtQz1w0WqvYZsmc3vg/exec",
+  "poll_seconds": 12,
+  "backend_version": "9C1",
+  "dashboard_integration": "9C2",
+  "submission_method": "POST application/x-www-form-urlencoded",
+  "retrieval_method": "JSONP",
+  "new_report_status": "Submitted",
+  "new_report_verification": "Unverified",
+  "photo_upload_enabled": false,
+  "central_workflow_enabled": false,
+  "note": "Live demonstration backend. Public dashboard may submit and read reports, but cannot perform central verification/workflow changes."
+}
