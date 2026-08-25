@@ -1,0 +1,16 @@
+{
+"type": "FeatureCollection",
+"name": "water_transport",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "transport_id": "WTA_001", "name": null, "source_geometry": "point", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.407228, 5.2573664 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_002", "name": null, "source_geometry": "point", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.030191, 4.8573469 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_003", "name": null, "source_geometry": "point", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.087699, 5.0443616 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_004", "name": null, "source_geometry": "point", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.0394483, 4.8747158 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_005", "name": null, "source_geometry": "line", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.3841854, 5.2458375 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_006", "name": null, "source_geometry": "line", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.0303175, 4.8576244 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_007", "name": null, "source_geometry": "line", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.1668615, 5.1244947 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_008", "name": null, "source_geometry": "polygon", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.384196500511194, 5.245864750012702 ] } },
+{ "type": "Feature", "properties": { "transport_id": "WTA_009", "name": null, "source_geometry": "polygon", "source_class": "OSM contextual water-transport location", "interpretation_note": "Mapped jetty/ferry/pier context only. OSM coverage may be incomplete." }, "geometry": { "type": "Point", "coordinates": [ 6.087619196821318, 5.044389049991292 ] } }
+]
+}
