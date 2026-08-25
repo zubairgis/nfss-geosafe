@@ -1,0 +1,11 @@
+layer,expected,actual,pass
+boundary,1,1,TRUE
+communities,40,40,TRUE
+clusters,54,54,TRUE
+grid,3868,3868,TRUE
+roads,471,471,TRUE
+waterways,68,68,TRUE
+water_transport,9,9,TRUE
+health,44,44,TRUE
+schools,149,149,TRUE
+police,2,2,TRUE

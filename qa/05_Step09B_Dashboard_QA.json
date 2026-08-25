@@ -1,0 +1,24 @@
+{
+  "step": "9B",
+  "dashboard": "NFSS GeoSafe",
+  "index_exists": true,
+  "css_exists": true,
+  "javascript_exists": true,
+  "data_references_checked": 16,
+  "all_data_references_exist": true,
+  "sections": [
+    "Overview",
+    "Operational Map",
+    "Community Intelligence",
+    "Reports",
+    "Verification & Response",
+    "Forest Surveillance",
+    "Evidence & Analytics",
+    "Methodology"
+  ],
+  "mobile_reporting_form": true,
+  "browser_local_submission": true,
+  "cross_device_backend": false,
+  "synthetic_incidents_only": true,
+  "published_to_github": false
+}

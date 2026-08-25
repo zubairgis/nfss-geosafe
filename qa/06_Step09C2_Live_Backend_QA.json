@@ -1,0 +1,31 @@
+{
+  "step": "9C2",
+  "system": "NFSS GeoSafe",
+  "backend_url": "https://script.google.com/macros/s/AKfycbwshF31zDcOcWTUdaMZm7DN0oSbIvHFa4y2Z05qF7NHRUra6WQtQz1w0WqvYZsmc3vg/exec",
+  "health_verified": true,
+  "central_submission_enabled": true,
+  "central_report_retrieval": true,
+  "retrieval_method": "JSONP",
+  "poll_seconds": 12,
+  "static_demo_reports_retained": true,
+  "step9b_localstorage_reports_used": false,
+  "new_report_initial_status": "Submitted",
+  "new_report_initial_verification": "Unverified",
+  "public_central_workflow_editing": false,
+  "photo_file_upload": false,
+  "checks": {
+    "backend config file exists": true,
+    "backend URL in config": true,
+    "JSONP function": true,
+    "backend initializer": true,
+    "central report loader": true,
+    "central POST submission": true,
+    "polling function": true,
+    "backend status indicator": true,
+    "live report marker": true,
+    "public live workflow blocked": true,
+    "old local submit handler removed": true,
+    "startup backend connection": true,
+    "polling started": true
+  }
+}

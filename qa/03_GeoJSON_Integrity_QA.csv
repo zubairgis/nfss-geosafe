@@ -1,0 +1,12 @@
+file,features,epsg,invalid,empty,size_mb,pass
+boundary.geojson,1,4326,0,0,0.0069599151611328125,TRUE
+building_clusters.geojson,54,4326,0,0,0.04635906219482422,TRUE
+communities.geojson,40,4326,0,0,0.02820301055908203,TRUE
+demo_reports.geojson,8,4326,0,0,0.0064640045166015625,TRUE
+health_facilities.geojson,44,4326,0,0,0.011180877685546875,TRUE
+operational_context_grid_500m.geojson,3868,4326,0,0,3.80283260345459,TRUE
+police_context.geojson,2,4326,0,0,0.00096035003662109375,TRUE
+roads.geojson,471,4326,0,0,0.18132400512695312,TRUE
+schools.geojson,149,4326,0,0,0.03951740264892578,TRUE
+water_transport.geojson,9,4326,0,0,0.0030918121337890625,TRUE
+waterways.geojson,68,4326,0,0,0.083553314208984375,TRUE

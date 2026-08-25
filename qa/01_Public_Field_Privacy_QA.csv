@@ -1,0 +1,12 @@
+layer,forbidden_fields,pass
+boundary,,TRUE
+communities,,TRUE
+clusters,,TRUE
+operational_grid,,TRUE
+roads,,TRUE
+waterways,,TRUE
+water_transport,,TRUE
+health,,TRUE
+schools,,TRUE
+police,,TRUE
+demo_reports,,TRUE
