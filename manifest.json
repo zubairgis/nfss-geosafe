@@ -1,0 +1,88 @@
+{
+  "project": "NFSS GeoSafe",
+  "package": "Sagbama demonstration data package",
+  "generated": "2026-08-25T10:55:35+0000",
+  "demonstration_mode": true,
+  "layers": [
+    {
+      "file": "boundary.geojson",
+      "feature_count": 1,
+      "size_mb": 0.007,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "building_clusters.geojson",
+      "feature_count": 54,
+      "size_mb": 0.0464,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "communities.geojson",
+      "feature_count": 40,
+      "size_mb": 0.0282,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "demo_reports.geojson",
+      "feature_count": 8,
+      "size_mb": 0.0065,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "health_facilities.geojson",
+      "feature_count": 44,
+      "size_mb": 0.0112,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "operational_context_grid_500m.geojson",
+      "feature_count": 3868,
+      "size_mb": 3.8028,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "police_context.geojson",
+      "feature_count": 2,
+      "size_mb": 0.001,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "roads.geojson",
+      "feature_count": 471,
+      "size_mb": 0.1813,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "schools.geojson",
+      "feature_count": 149,
+      "size_mb": 0.0395,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "water_transport.geojson",
+      "feature_count": 9,
+      "size_mb": 0.0031,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    },
+    {
+      "file": "waterways.geojson",
+      "feature_count": 68,
+      "size_mb": 0.0836,
+      "crs": "EPSG:4326",
+      "public_demo_safe": true
+    }
+  ],
+  "configuration_files": ["config/report_categories.json", "config/workflow.json", "config/dashboard_config.json"],
+  "metadata_files": "metadata/provenance.json",
+  "warning": "Synthetic demonstration reports are not real incidents. OSM-derived operational context may be incomplete."
+}

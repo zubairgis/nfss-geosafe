@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="NFSS GeoSafe community-based forest and rural security situational awareness demonstration."
+  >
+
+  <title>NFSS GeoSafe</title>
+
+  <link
+    rel="preconnect"
+    href="https://unpkg.com"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="assets/css/styles.css"
+  >
+</head>
+
+
+<body>
+
+<!-- ================================================================
+     DEMONSTRATION NOTICE
+================================================================ -->
+
+<div class="demo-banner">
+  <strong>NFSS GeoSafe Demonstration</strong>
+
+  <span
+    id="backendStatusBadge"
+    class="backend-status backend-connecting"
+  >
+    ● Connecting to central backend…
+  </span>
+  <span>
+    Incident records shown in this prototype are synthetic.
+    Submitted observations are not automatically verified crimes.
+  </span>
+</div>
+
+
+<!-- ================================================================
+     HEADER
+================================================================ -->
+
+<header class="site-header">
+
+  <div class="brand">
+
+    <div class="brand-mark">
+      NG
+    </div>
+
+    <div>
+      <div class="brand-title">
+        NFSS GeoSafe
+      </div>
+
+      <div class="brand-subtitle">
+        Forest & Rural Security Situational Awareness
+      </div>
+    </div>
+
+  </div>
+
+
+  <button
+    id="mobileMenuButton"
+    class="mobile-menu-button"
+    aria-label="Open navigation"
+  >
+    ☰
+  </button>
+
+
+  <nav id="mainNav">
+
+    <a href="#overview">
+      Overview
+    </a>
+
+    <a href="#operational-map">
+      Operational Map
+    </a>
+
+    <a href="#community-intelligence">
+      Community Intelligence
+    </a>
+
+    <a href="#reports">
+      Reports
+    </a>
+
+    <a href="#command-console">
+      Command Console
+    </a>
+
+    <a href="#response">
+      Verification & Response
+    </a>
+
+    <a href="#forest-surveillance">
+      Forest Surveillance
+    </a>
+
+    <a href="#evidence">
+      Evidence & Analytics
+    </a>
+
+    <a href="#methodology">
+      Methodology
+    </a>
+
+  </nav>
+
+
+  <button
+    id="openReportButton"
+    class="primary-button report-button"
+  >
+    + Report Observation
+  </button>
+
+</header>
+
+
+<!-- ================================================================
+     MAIN
+================================================================ -->
+
+<main>
+
+
+<!-- ================================================================
+     OVERVIEW
+================================================================ -->
+
+<section
+  id="overview"
+  class="section hero-section"
+>
+
+  <div class="hero-grid">
+
+    <div>
+
+      <div class="eyebrow">
+        Proof-of-Concept · Sagbama LGA · Bayelsa State
+      </div>
+
+      <h1>
+        From community observation to
+        evidence-based forest security action
+      </h1>
+
+      <p class="hero-text">
+        NFSS GeoSafe demonstrates how community and field observations
+        can become georeferenced evidence, receive human verification,
+        acquire spatial context, support operational assignment and
+        retain an auditable action history.
+      </p>
+
+
+      <div class="hero-actions">
+
+        <a
+          class="primary-button"
+          href="#operational-map"
+        >
+          Open Operational Map
+        </a>
+
+        <button
+          class="secondary-button"
+          id="heroReportButton"
+        >
+          Submit Demo Report
+        </button>
+
+      </div>
+
+
+      <div class="principle-strip">
+
+        <div>
+          <strong>01</strong>
+          <span>Observe</span>
+        </div>
+
+        <div>→</div>
+
+        <div>
+          <strong>02</strong>
+          <span>Verify</span>
+        </div>
+
+        <div>→</div>
+
+        <div>
+          <strong>03</strong>
+          <span>Contextualize</span>
+        </div>
+
+        <div>→</div>
+
+        <div>
+          <strong>04</strong>
+          <span>Act</span>
+        </div>
+
+        <div>→</div>
+
+        <div>
+          <strong>05</strong>
+          <span>Document</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <aside class="hero-panel">
+
+      <div class="panel-label">
+        Operational principle
+      </div>
+
+      <h2>
+        A report is a signal,
+        not automatically a confirmed incident.
+      </h2>
+
+      <p>
+        Community observations first enter the system as
+        <strong>Submitted · Unverified</strong>.
+        Human review is required before operational verification.
+      </p>
+
+      <div class="evidence-note">
+        Public demonstration data contains no real FIR records,
+        reporter identities, NFSS patrol positions or confidential
+        security information.
+      </div>
+
+    </aside>
+
+  </div>
+
+
+  <div class="kpi-grid">
+
+    <article class="kpi-card">
+      <span class="kpi-label">Context population</span>
+      <strong id="kpiPopulation">—</strong>
+      <small>WorldPop 2025, boundary-weighted</small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">Detected buildings</span>
+      <strong id="kpiBuildings">—</strong>
+      <small>Google Open Buildings context</small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">Mapped communities</span>
+      <strong id="kpiCommunities">—</strong>
+      <small>OSM contextual locations</small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">Demo reports</span>
+      <strong id="kpiReports">—</strong>
+      <small>Synthetic + local browser demo</small>
+    </article>
+
+    <article class="kpi-card warning-card">
+      <span class="kpi-label">Awaiting verification</span>
+      <strong id="kpiUnverified">—</strong>
+      <small>Submitted / under review</small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">Resolved / closed</span>
+      <strong id="kpiResolved">—</strong>
+      <small>Demonstration workflow</small>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     OPERATIONAL MAP
+================================================================ -->
+
+<section
+  id="operational-map"
+  class="section"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Situational awareness
+      </div>
+
+      <h2>
+        Operational Map
+      </h2>
+
+      <p>
+        View reports together with communities, transport access,
+        waterways, facilities, population/building concentrations and
+        environmental context.
+      </p>
+    </div>
+
+    <button
+      id="resetMapButton"
+      class="secondary-button"
+    >
+      Reset Map
+    </button>
+
+  </div>
+
+
+  <div class="map-toolbar">
+
+    <label>
+      Report status
+
+      <select id="mapStatusFilter">
+        <option value="ALL">All statuses</option>
+      </select>
+    </label>
+
+
+    <label>
+      Report category
+
+      <select id="mapCategoryFilter">
+        <option value="ALL">All categories</option>
+      </select>
+    </label>
+
+
+    <label class="checkbox-label">
+
+      <input
+        id="contextGridToggle"
+        type="checkbox"
+      >
+
+      500 m operational-context grid
+
+    </label>
+
+  </div>
+
+
+  <div class="map-layout">
+
+    <div id="map"></div>
+
+
+    <aside
+      id="mapInspector"
+      class="map-inspector"
+    >
+
+      <div class="panel-label">
+        Map inspector
+      </div>
+
+      <h3>
+        Select a report, community or spatial feature
+      </h3>
+
+      <p>
+        Click a map object to inspect its evidence and spatial context.
+      </p>
+
+      <div
+        id="inspectorContent"
+        class="inspector-content"
+      ></div>
+
+    </aside>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     COMMUNITY INTELLIGENCE
+================================================================ -->
+
+<section
+  id="community-intelligence"
+  class="section section-alt"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Local operational context
+      </div>
+
+      <h2>
+        Community Intelligence
+      </h2>
+
+      <p>
+        Community records combine population/building context with
+        terrestrial and water accessibility.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="community-layout">
+
+    <div class="community-selector-card">
+
+      <label for="communitySelect">
+        Select mapped community
+      </label>
+
+      <select id="communitySelect">
+        <option value="">
+          Select a community…
+        </option>
+      </select>
+
+      <div class="context-warning">
+        OSM community locations are contextual and are not an
+        authoritative census settlement database.
+      </div>
+
+    </div>
+
+
+    <div
+      id="communityProfile"
+      class="community-profile empty-state"
+    >
+      Select a community to inspect its spatial context.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     REPORTS
+================================================================ -->
+
+<section
+  id="reports"
+  class="section"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Community and field observations
+      </div>
+
+      <h2>
+        Incident & Observation Reports
+      </h2>
+
+      <p>
+        Every observation retains its status and verification state.
+        Demo reports are synthetic and clearly identified.
+      </p>
+    </div>
+
+    <button
+      id="reportsAddButton"
+      class="primary-button"
+    >
+      + New Observation
+    </button>
+
+  </div>
+
+
+  <div class="filter-row">
+
+    <label>
+      Status
+      <select id="reportStatusFilter">
+        <option value="ALL">
+          All statuses
+        </option>
+      </select>
+    </label>
+
+
+    <label>
+      Category
+      <select id="reportCategoryFilter">
+        <option value="ALL">
+          All categories
+        </option>
+      </select>
+    </label>
+
+
+    <label>
+      Search
+      <input
+        id="reportSearch"
+        type="search"
+        placeholder="Report ID or community"
+      >
+    </label>
+
+  </div>
+
+
+  <div class="table-wrap">
+
+    <table class="data-table">
+
+      <thead>
+        <tr>
+          <th>Report</th>
+          <th>Category</th>
+          <th>Community</th>
+          <th>Status</th>
+          <th>Verification</th>
+          <th>Submitted</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="reportsTableBody">
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+
+<!-- ================================================================
+     NFSS COMMAND CONSOLE
+================================================================ -->
+
+<section
+  id="command-console"
+  class="section command-section"
+>
+
+  <div class="section-heading">
+
+    <div>
+
+      <div class="eyebrow">
+        Authorized NFSS operational workflow
+      </div>
+
+      <h2>
+        NFSS Command Console
+      </h2>
+
+      <p>
+        Review centrally submitted observations, record verification
+        decisions, assign operational responsibility and maintain an
+        auditable action history.
+      </p>
+
+    </div>
+
+
+    <div
+      id="commandBackendIndicator"
+      class="command-backend-indicator"
+    >
+      Central backend
+    </div>
+
+  </div>
+
+
+  <div class="command-security-banner">
+
+    <strong>
+      Authorized command area
+    </strong>
+
+    <span>
+      The command key is used only in browser memory for this session.
+      It is not written to GitHub, localStorage or the project files.
+    </span>
+
+  </div>
+
+
+  <div class="command-layout">
+
+
+    <!-- ==========================================================
+         LEFT PANEL
+    =========================================================== -->
+
+    <aside class="command-sidebar">
+
+
+      <div class="command-panel">
+
+        <div class="panel-label">
+          01 · Select report
+        </div>
+
+        <label>
+          Central live report
+
+          <select
+            id="commandReportSelect"
+          >
+            <option value="">
+              Select report…
+            </option>
+          </select>
+
+        </label>
+
+        <div
+          id="commandReportCount"
+          class="command-small-note"
+        >
+          Loading central reports…
+        </div>
+
+      </div>
+
+
+      <div class="command-panel">
+
+        <div class="panel-label">
+          02 · Officer identity
+        </div>
+
+
+        <label>
+          Authorized officer name *
+
+          <input
+            id="commandActorName"
+            type="text"
+            maxlength="150"
+            autocomplete="off"
+            placeholder="e.g. Officer A. Example"
+          >
+        </label>
+
+
+        <label>
+          Officer role *
+
+          <select id="commandActorRole">
+
+            <option value="NFSS Command Officer">
+              NFSS Command Officer
+            </option>
+
+            <option value="NFSS Reviewing Officer">
+              NFSS Reviewing Officer
+            </option>
+
+            <option value="NFSS Operations Officer">
+              NFSS Operations Officer
+            </option>
+
+            <option value="NFSS Supervisor">
+              NFSS Supervisor
+            </option>
+
+          </select>
+
+        </label>
+
+      </div>
+
+
+      <div class="command-panel">
+
+        <div class="panel-label">
+          03 · Command authorization
+        </div>
+
+
+        <label>
+          Private command key *
+
+          <input
+            id="commandAdminKey"
+            type="password"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="NFSSCMD-…"
+          >
+
+        </label>
+
+
+        <div class="command-small-note">
+
+          The key remains only in page memory.
+          Refreshing or closing the page removes it.
+
+        </div>
+
+
+        <button
+          id="clearCommandKeyButton"
+          type="button"
+          class="secondary-button full-width"
+        >
+          Clear Command Key
+        </button>
+
+      </div>
+
+
+    </aside>
+
+
+    <!-- ==========================================================
+         MAIN PANEL
+    =========================================================== -->
+
+    <div class="command-main">
+
+
+      <!-- REPORT PROFILE -->
+
+      <article class="command-card">
+
+        <div class="command-card-header">
+
+          <div>
+
+            <div class="panel-label">
+              Live report
+            </div>
+
+            <h3 id="commandReportTitle">
+              Select a central live report
+            </h3>
+
+          </div>
+
+
+          <div
+            id="commandCurrentStatus"
+            class="command-status-area"
+          ></div>
+
+        </div>
+
+
+        <div
+          id="commandReportProfile"
+          class="command-empty-state"
+        >
+          Select a centrally submitted report to begin review.
+        </div>
+
+      </article>
+
+
+      <!-- SPATIAL CONTEXT -->
+
+      <article class="command-card">
+
+        <div class="panel-label">
+          Spatial intelligence
+        </div>
+
+        <h3>
+          Operational Context
+        </h3>
+
+
+        <div
+          id="commandSpatialContext"
+          class="command-context-grid"
+        >
+
+          <div class="command-empty-state">
+            No report selected.
+          </div>
+
+        </div>
+
+
+        <div class="context-warning">
+
+          Spatial information supports operational assessment.
+          It does not independently verify that a reported event
+          occurred.
+
+        </div>
+
+      </article>
+
+
+      <!-- ACTION PANEL -->
+
+      <article class="command-card">
+
+        <div class="panel-label">
+          Officer decision
+        </div>
+
+        <h3>
+          Available Command Actions
+        </h3>
+
+
+        <div
+          id="commandActionExplanation"
+          class="command-action-explanation"
+        >
+          Select a report to display the actions permitted from its
+          current workflow status.
+        </div>
+
+
+        <div
+          id="commandAssignmentFields"
+          class="command-assignment-fields hidden"
+        >
+
+          <label>
+
+            Assigned NFSS unit *
+
+            <input
+              id="commandAssignedUnit"
+              type="text"
+              maxlength="200"
+              placeholder="e.g. Sagbama Field Team"
+            >
+
+          </label>
+
+
+          <label>
+
+            Assigned officer
+
+            <input
+              id="commandAssignedOfficer"
+              type="text"
+              maxlength="150"
+              placeholder="Optional"
+            >
+
+          </label>
+
+        </div>
+
+
+        <label class="command-note-label">
+
+          Operational / review note
+
+          <textarea
+            id="commandNote"
+            rows="4"
+            maxlength="1500"
+            placeholder="Record evidence reviewed, reason for decision, assignment instruction or operational result."
+          ></textarea>
+
+        </label>
+
+
+        <div
+          id="commandActionButtons"
+          class="command-actions"
+        ></div>
+
+
+        <div
+          id="commandResult"
+          class="command-result hidden"
+        ></div>
+
+      </article>
+
+
+      <!-- AUDIT HISTORY -->
+
+      <article class="command-card">
+
+        <div class="command-card-header">
+
+          <div>
+
+            <div class="panel-label">
+              Accountability
+            </div>
+
+            <h3>
+              Report Action History
+            </h3>
+
+          </div>
+
+
+          <button
+            id="refreshCommandHistoryButton"
+            type="button"
+            class="secondary-button"
+          >
+            Refresh History
+          </button>
+
+        </div>
+
+
+        <div
+          id="commandTimeline"
+          class="command-timeline"
+        >
+
+          <div class="command-empty-state">
+            Select a report to view its audit history.
+          </div>
+
+        </div>
+
+      </article>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     VERIFICATION / RESPONSE
+================================================================ -->
+
+<section
+  id="response"
+  class="section section-alt"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Human-controlled workflow
+      </div>
+
+      <h2>
+        Verification & Response
+      </h2>
+
+      <p>
+        Operational status is advanced through an explicit evidence
+        workflow rather than being inferred automatically by the GIS.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div
+    id="workflowCards"
+    class="workflow-grid"
+  ></div>
+
+
+  <div class="response-principles">
+
+    <article>
+      <strong>Human verification</strong>
+      <p>
+        Spatial proximity, land cover or population context can support
+        review, but cannot independently verify a security event.
+      </p>
+    </article>
+
+    <article>
+      <strong>Traceable action</strong>
+      <p>
+        Each transition should eventually retain officer, timestamp,
+        evidence and operational notes.
+      </p>
+    </article>
+
+    <article>
+      <strong>Controlled disclosure</strong>
+      <p>
+        Public information and authorized command information should
+        remain separate in an operational deployment.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     FOREST SURVEILLANCE
+================================================================ -->
+
+<section
+  id="forest-surveillance"
+  class="section"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Environmental operating context
+      </div>
+
+      <h2>
+        Forest & Environmental Surveillance
+      </h2>
+
+      <p>
+        Environmental layers support field interpretation without
+        being treated as proof of criminal activity.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="kpi-grid environmental-kpis">
+
+    <article class="kpi-card">
+      <span class="kpi-label">
+        Tree-dominated context
+      </span>
+      <strong id="treeContextValue">—</strong>
+      <small>
+        WorldCover tree-cover contextual measure
+      </small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">
+        Water / wetland context
+      </span>
+      <strong id="waterContextValue">—</strong>
+      <small>
+        WorldCover contextual measure
+      </small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">
+        Mapped waterways
+      </span>
+      <strong>68</strong>
+      <small>
+        OSM contextual waterways
+      </small>
+    </article>
+
+    <article class="kpi-card">
+      <span class="kpi-label">
+        Water-transport points
+      </span>
+      <strong>9</strong>
+      <small>
+        Mapped jetty/ferry/pier objects
+      </small>
+    </article>
+
+  </div>
+
+
+  <div class="chart-grid">
+
+    <article class="chart-card">
+      <h3>
+        Population by building concentration
+      </h3>
+
+      <canvas id="populationConcentrationChart"></canvas>
+    </article>
+
+
+    <article class="chart-card">
+      <h3>
+        Environmental context
+      </h3>
+
+      <canvas id="environmentChart"></canvas>
+    </article>
+
+  </div>
+
+
+  <div class="method-note">
+    <strong>Interpretation:</strong>
+    ESA WorldCover tree cover is environmental context and is
+    <em>not</em> equivalent to legally gazetted forest estate.
+    JRC values describe historical surface-water behaviour and are
+    not a current flood alert.
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     EVIDENCE ANALYTICS
+================================================================ -->
+
+<section
+  id="evidence"
+  class="section section-alt"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Accountability
+      </div>
+
+      <h2>
+        Evidence & Analytics
+      </h2>
+
+      <p>
+        The dashboard distinguishes observed signals, verification
+        status and operational action.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="chart-grid">
+
+    <article class="chart-card">
+      <h3>
+        Reports by workflow status
+      </h3>
+
+      <canvas id="statusChart"></canvas>
+    </article>
+
+
+    <article class="chart-card">
+      <h3>
+        Reports by category
+      </h3>
+
+      <canvas id="categoryChart"></canvas>
+    </article>
+
+  </div>
+
+
+  <div class="evidence-chain">
+
+    <div>
+      <span>E0</span>
+      <strong>Source</strong>
+      <small>
+        Community or field observation
+      </small>
+    </div>
+
+    <div>
+      <span>E1</span>
+      <strong>Spatial context</strong>
+      <small>
+        Roads, waterways, population, environment
+      </small>
+    </div>
+
+    <div>
+      <span>E2</span>
+      <strong>Reviewed</strong>
+      <small>
+        Internal human assessment
+      </small>
+    </div>
+
+    <div>
+      <span>E3</span>
+      <strong>Verified</strong>
+      <small>
+        Evidence-backed operational verification
+      </small>
+    </div>
+
+    <div>
+      <span>E4</span>
+      <strong>Action linked</strong>
+      <small>
+        Assignment and response
+      </small>
+    </div>
+
+    <div>
+      <span>E5</span>
+      <strong>Closed / learned</strong>
+      <small>
+        Resolution evidence retained
+      </small>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================================
+     METHODOLOGY
+================================================================ -->
+
+<section
+  id="methodology"
+  class="section"
+>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">
+        Governance & provenance
+      </div>
+
+      <h2>
+        How to Interpret NFSS GeoSafe
+      </h2>
+    </div>
+
+  </div>
+
+
+  <div class="method-grid">
+
+    <article>
+      <span>01</span>
+      <h3>Reports are signals</h3>
+      <p>
+        Submission does not establish that a crime or security event
+        occurred.
+      </p>
+    </article>
+
+    <article>
+      <span>02</span>
+      <h3>Sources remain distinct</h3>
+      <p>
+        Authoritative, open, modelled, derived and synthetic sources
+        retain their provenance.
+      </p>
+    </article>
+
+    <article>
+      <span>03</span>
+      <h3>GIS supports decisions</h3>
+      <p>
+        Distance, population, building and environmental context
+        support officers but do not replace field verification.
+      </p>
+    </article>
+
+    <article>
+      <span>04</span>
+      <h3>Privacy by design</h3>
+      <p>
+        Public GitHub data excludes reporter identities, confidential
+        security records and sensitive operational locations.
+      </p>
+    </article>
+
+  </div>
+
+
+  <div
+    id="provenancePanel"
+    class="provenance-panel"
+  >
+    Loading data provenance…
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+
+<footer>
+
+  <strong>
+    NFSS GeoSafe · Demonstration Prototype
+  </strong>
+
+  <span>
+    Hensard University · Bayelsa State, Nigeria
+  </span>
+
+  <span>
+    Evidence-based geospatial support for forest and rural security.
+  </span>
+
+</footer>
+
+
+<!-- ================================================================
+     MOBILE REPORT MODAL
+================================================================ -->
+
+<div
+  id="reportModal"
+  class="modal"
+  aria-hidden="true"
+>
+
+  <div class="modal-backdrop"></div>
+
+
+  <div class="modal-card">
+
+    <button
+      id="closeReportModal"
+      class="modal-close"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+
+    <div class="eyebrow">
+      Community / Field Observation
+    </div>
+
+    <h2>
+      Submit a Demo Report
+    </h2>
+
+
+    <div class="form-notice">
+      This observation will be submitted to the central NFSS GeoSafe
+      demonstration registry. New submissions enter as
+      Submitted · Unverified.
+    </div>
+
+
+    <form id="reportForm">
+
+      <label>
+        Report category *
+
+        <select
+          id="formCategory"
+          required
+        ></select>
+      </label>
+
+
+      <label>
+        Community
+
+        <select id="formCommunity">
+          <option value="">
+            Select mapped community
+          </option>
+        </select>
+      </label>
+
+
+      <label>
+        Description *
+
+        <textarea
+          id="formDescription"
+          rows="4"
+          required
+          maxlength="1000"
+          placeholder="Describe what was observed. Do not include confidential personal information."
+        ></textarea>
+      </label>
+
+
+      <fieldset>
+
+        <legend>
+          Observation location
+        </legend>
+
+        <button
+          id="useLocationButton"
+          type="button"
+          class="secondary-button"
+        >
+          Use my current location
+        </button>
+
+
+        <div class="coordinate-grid">
+
+          <label>
+            Latitude
+            <input
+              id="formLatitude"
+              type="number"
+              step="any"
+              min="-90"
+              max="90"
+              required
+            >
+          </label>
+
+          <label>
+            Longitude
+            <input
+              id="formLongitude"
+              type="number"
+              step="any"
+              min="-180"
+              max="180"
+              required
+            >
+          </label>
+
+        </div>
+
+        <small id="locationMessage"></small>
+
+      </fieldset>
+
+
+      <label>
+        Evidence photograph
+
+        <input
+          id="formPhoto"
+          type="file"
+          accept="image/*"
+        >
+
+        <small>
+          Step 9C2 records only whether evidence was selected.
+          The photograph itself is not uploaded yet.
+        </small>
+
+      </label>
+
+
+      <div class="form-security-note">
+        No name, phone number or personal identifier is requested in
+        this public demonstration form.
+      </div>
+
+
+      <button
+        type="submit"
+        class="primary-button full-width"
+      >
+        Submit Observation
+      </button>
+
+    </form>
+
+
+    <div
+      id="submissionSuccess"
+      class="submission-success hidden"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- ================================================================
+     LIBRARIES
+================================================================ -->
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
+></script>
+
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
