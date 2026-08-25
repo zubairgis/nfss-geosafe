@@ -1,67 +1,70 @@
 "use strict";
 
 /* NFSS GeoSafe live-backend compatibility fix — 2026-08-25 */
-window.NFSS_LIVE_FIX_VERSION = "2026-08-25-1";
+window.NFSS_LIVE_FIX_VERSION = "2026-08-25-2";
 
-window.jsonpRequest = function jsonpRequestFixed(
+/*
+  Diagnostic result on the deployed GitHub Pages site:
+  - Apps Script JSONP <script> execution is blocked in this browser/network path.
+  - Direct cross-origin fetch to the same Apps Script endpoint succeeds (HTTP 200).
+
+  Keep the existing application API name jsonpRequest() so no other dashboard
+  code has to change, but implement it with ordinary CORS fetch instead.
+*/
+window.jsonpRequest = async function jsonpRequestViaFetch(
   baseUrl,
   parameters = {},
   timeoutMs = 20000
 ) {
-  return new Promise((resolve, reject) => {
-    const callbackName =
-      "nfssGeoSafeCb" +
-      Date.now() +
-      Math.floor(Math.random() * 1000000000);
+  const query = new URLSearchParams();
 
-    const query = new URLSearchParams();
+  for (const [key, value] of Object.entries(parameters)) {
+    if (value !== undefined && value !== null) {
+      query.set(key, String(value));
+    }
+  }
 
-    for (const [key, value] of Object.entries(parameters)) {
-      if (value !== undefined && value !== null) {
-        query.set(key, String(value));
-      }
+  /* Never send a JSONP callback when using fetch. */
+  query.delete("callback");
+  query.set("_ts", String(Date.now()));
+
+  const separator = baseUrl.includes("?") ? "&" : "?";
+  const requestUrl = baseUrl + separator + query.toString();
+
+  const controller = new AbortController();
+  const timer = window.setTimeout(
+    () => controller.abort(),
+    timeoutMs
+  );
+
+  try {
+    const response = await fetch(requestUrl, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-store",
+      credentials: "omit",
+      redirect: "follow",
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `NFSS GeoSafe backend returned HTTP ${response.status}.`
+      );
     }
 
-    query.set("callback", callbackName);
-    query.set("_ts", String(Date.now()));
+    const data = await response.json();
+    return data;
 
-    const script = document.createElement("script");
-    let finished = false;
+  } catch (error) {
+    if (error && error.name === "AbortError") {
+      throw new Error("NFSS GeoSafe backend request timed out.");
+    }
+    throw error;
 
-    const cleanup = () => {
-      if (finished) return;
-      finished = true;
-      window.clearTimeout(timer);
-      try {
-        delete window[callbackName];
-      } catch (_) {
-        window[callbackName] = undefined;
-      }
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-
-    window[callbackName] = data => {
-      cleanup();
-      resolve(data);
-    };
-
-    script.onerror = () => {
-      cleanup();
-      reject(new Error("Could not reach NFSS GeoSafe central backend."));
-    };
-
-    const timer = window.setTimeout(() => {
-      cleanup();
-      reject(new Error("NFSS GeoSafe central backend request timed out."));
-    }, timeoutMs);
-
-    const separator = baseUrl.includes("?") ? "&" : "?";
-    script.src = baseUrl + separator + query.toString();
-    script.async = true;
-    document.head.appendChild(script);
-  });
+  } finally {
+    window.clearTimeout(timer);
+  }
 };
 
 window.initializeLiveBackend = async function initializeLiveBackendFixed() {
@@ -70,7 +73,10 @@ window.initializeLiveBackend = async function initializeLiveBackendFixed() {
 
     const response = await fetch(
       PATHS.backendConfig + "?v=" + Date.now(),
-      { cache: "no-store" }
+      {
+        cache: "no-store",
+        credentials: "same-origin"
+      }
     );
 
     if (!response.ok) {
@@ -87,14 +93,15 @@ window.initializeLiveBackend = async function initializeLiveBackendFixed() {
     }
 
     /*
-      Load the actual report registry first. This removes the old health-check
-      gate and makes report availability the authoritative connection test.
+      Use the report registry itself as the connection test. The diagnostic page
+      proved direct CORS fetch works from this GitHub Pages origin.
     */
-    await loadCentralReports(false);
+    const reports = await loadCentralReports(false);
 
     STATE.backend.health = {
       success: true,
       backend_version: config.backend_version || "live",
+      transport: "cors_fetch",
       message: "Central report registry reachable"
     };
 
@@ -102,9 +109,10 @@ window.initializeLiveBackend = async function initializeLiveBackendFixed() {
     setBackendStatus("connected");
 
     console.log(
-      "NFSS GeoSafe central registry connected via live compatibility fix.",
-      { reports: STATE.liveReports.length }
+      "NFSS GeoSafe central registry connected via CORS fetch.",
+      { reports: Array.isArray(reports) ? reports.length : STATE.liveReports.length }
     );
+
   } catch (error) {
     console.error("NFSS live backend connection error:", error);
     STATE.backend.connected = false;
