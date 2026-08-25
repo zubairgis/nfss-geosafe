@@ -1,0 +1,37 @@
+{
+  "project": "NFSS GeoSafe",
+  "demonstration_area": "Sagbama LGA, Bayelsa State, Nigeria",
+  "source_classes": {
+    "authoritative": {
+      "boundary": "Validated Sagbama LGA project boundary",
+      "health": "Authoritative project health-facility dataset",
+      "schools": "Authoritative project school dataset"
+    },
+    "open_context": {
+      "roads": "OpenStreetMap / Geofabrik",
+      "waterways": "OpenStreetMap / Geofabrik",
+      "settlements": "OpenStreetMap / Geofabrik",
+      "water_transport": "OpenStreetMap / Geofabrik",
+      "police": "OpenStreetMap contextual locations only; not authoritative operational security database"
+    },
+    "derived": {
+      "buildings": "Google Open Buildings V3",
+      "population": "WorldPop 2025",
+      "land_cover": "ESA WorldCover 2021",
+      "historical_surface_water": "JRC Global Surface Water v1.4",
+      "elevation": "Copernicus GLO-30 DSM 2024_1; DSM, not DTM; EGM2008 vertical reference"
+    },
+    "synthetic": {
+      "demo_reports": "Generated solely to demonstrate reporting, verification and action workflow."
+    }
+  },
+  "interpretation_limits": {
+    "tree_cover": "WorldCover tree class is not equivalent to gazetted/legal forest estate.",
+    "jrc": "JRC surface-water metrics are historical context, not current flooding.",
+    "police": "Two mapped OSM police locations do not represent complete security coverage.",
+    "communities": "OSM mapped settlements are not an authoritative census settlement database.",
+    "building_clusters": "Derived concentration polygons are not official community boundaries.",
+    "population": "WorldPop is modelled gridded population, not household census enumeration.",
+    "reports": "All demonstration incident records are synthetic."
+  }
+}
