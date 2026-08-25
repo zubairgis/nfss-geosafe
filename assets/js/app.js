@@ -5,11 +5,13 @@
   map-alert.js adds blinking map alerts for Unverified observations.
   volunteer-link.js adds the registered volunteer Google Form link.
   satellite-layer.js adds a Street/Satellite Leaflet basemap switcher.
+  forestwatch-embed.js embeds the NFSS ForestWatch Earth Engine App.
 */
 document.write(
-  '<script src="assets/js/app-original.js?v=20260825-5"><\/script>' +
-  '<script src="assets/js/live-fix.js?v=20260825-5"><\/script>' +
-  '<script src="assets/js/map-alert.js?v=20260825-5"><\/script>' +
-  '<script src="assets/js/volunteer-link.js?v=20260825-5"><\/script>' +
-  '<script src="assets/js/satellite-layer.js?v=20260825-5"><\/script>'
+  '<script src="assets/js/app-original.js?v=20260825-6"><\/script>' +
+  '<script src="assets/js/live-fix.js?v=20260825-6"><\/script>' +
+  '<script src="assets/js/map-alert.js?v=20260825-6"><\/script>' +
+  '<script src="assets/js/volunteer-link.js?v=20260825-6"><\/script>' +
+  '<script src="assets/js/satellite-layer.js?v=20260825-6"><\/script>' +
+  '<script src="assets/js/forestwatch-embed.js?v=20260825-6"><\/script>'
 );
